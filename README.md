@@ -42,24 +42,42 @@ Esse sistema deverá controlar o estoque dos insumos e a produção de marmitas,
 
 7. Relatórios
 É a opção que permite ter um controle gerencial das operações de estoque, produção e vendas. Deve mostrar na tela os seguintes indicadores:
-i. A quantidade média de produção de marmitas, considerando apenas os dados cadastrados;
-ii. A quantidade média de venda de marmitas, em número e em valor (R$), considerando apenas os dados cadastrados;
-iii. O dia com a maior produção e a quantidade produzida;
-iv. O dia com a menor produção e a quantidade produzida;
-v. O dia com maior venda, a quantidade vendida em número de marmitas e em valor (R$);
-vi. O dia com menor venda, a quantidade vendida em número de marmitas e em valor (R$);
-vii. Os níveis atuais dos estoques de cada insumo.
+
+- i. A quantidade média de produção de marmitas, considerando apenas os dados cadastrados; 
+
+- ii. A quantidade média de venda de marmitas, em número e em valor (R$), considerando apenas os dados cadastrados;
+
+- iii. O dia com a maior produção e a quantidade produzida;
+
+- iv. O dia com a menor produção e a quantidade produzida;
+
+- v. O dia com maior venda, a quantidade vendida em número de marmitas e em valor (R$);
+ 
+- vi. O dia com menor venda, a quantidade vendida em número de marmitas e em valor (R$);
+
+- vii. Os níveis atuais dos estoques de cada insumo.
+
 8. Finalizar
 É a opção que finaliza o programa.
 
 Observações importantes
-i. O sistema deverá ser feito em linguagem C e ser comentado.
-ii. Todo valor de produção e venda de marmitas, seja de entrada ou saída, deve ser na unidade de medida de unidade.
-iii. Os valores de dia da semana devem ser tratados assim: 1 – Domingo; 2 – Segunda; 3 – Terça; 4 – Quarta; 5 – Quinta; 6 – Sexta; 7 – Sábado.
-iv. Toda vez que o processamento de uma opção chegar ao fim, o programa deve retornar ao menu inicial, com exceção da opção Finalizar.
-v. Os diretores estão empolgados com a criação desse projeto, porque permitirá obter um bom controle, por isso não aceitarão inconsistências nos processos.
-vi. Os diretores também acreditam que a Tecnologia da Informação é dinâmica, por isso veem com bons olhos incrementos ao projeto, desde que somem ao valor agregado proposto.
-vii. O preço de venda da marmita é de R$ 12,99 de segunda a sexta e de R$ 15,99 aos sábados e domingos;
-viii. Os insumos para produção da marmita são: arroz, feijão, carne, legumes e ovo.
-ix. Para produzir uma marmita são necessários: 120g de arroz, 80g de feijão, 120g de carne, 120g de legumes e 1 ovo. Toda marmita é embalada em um invólucro de alumínio, sendo gasto um por marmita. O estoque do invólucro também deve ser controlado;
-x. Quando insere a produção de marmitas, deve-se abater do estoque os insumos utilizados.
+
+- i. O sistema deverá ser feito em linguagem C e ser comentado.
+
+- ii. Todo valor de produção e venda de marmitas, seja de entrada ou saída, deve ser na unidade de medida de unidade.
+
+- iii. Os valores de dia da semana devem ser tratados assim: 1 – Domingo; 2 – Segunda; 3 – Terça; 4 – Quarta; 5 – Quinta; 6 – Sexta; 7 – Sábado.
+
+- iv. Toda vez que o processamento de uma opção chegar ao fim, o programa deve retornar ao menu inicial, com exceção da opção Finalizar.
+
+- v. Os diretores estão empolgados com a criação desse projeto, porque permitirá obter um bom controle, por isso não aceitarão inconsistências nos processos.
+
+- vi. Os diretores também acreditam que a Tecnologia da Informação é dinâmica, por isso veem com bons olhos incrementos ao projeto, desde que somem ao valor agregado proposto.
+
+- vii. O preço de venda da marmita é de R$ 12,99 de segunda a sexta e de R$ 15,99 aos sábados e domingos;
+
+- viii. Os insumos para produção da marmita são: arroz, feijão, carne, legumes e ovo.
+
+- ix. Para produzir uma marmita são necessários: 120g de arroz, 80g de feijão, 120g de carne, 120g de legumes e 1 ovo. Toda marmita é embalada em um invólucro de alumínio, sendo gasto um por marmita. O estoque do invólucro também deve ser controlado;
+
+- x. Quando insere a produção de marmitas, deve-se abater do estoque os insumos utilizados.
