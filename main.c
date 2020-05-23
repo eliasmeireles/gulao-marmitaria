@@ -143,7 +143,7 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
                 atualizarProducao(estoque, producao, idDiaDaSemana);
             }
         } else {
-            atualizarProducao(estoque, producao, opcaoSelecionada);
+            atualizarProducao(estoque, producao, opcaoSelecionada - 1);
         }
         consultarProducao(producao);
     } else {
@@ -157,7 +157,7 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
 
 // Solicita ao usuário do sistema o novo valor em (tipo de medida) para o insumo
 // a ser atualizado no producao.
-void atualizarProducao(struct  Estoque *estoque, struct Producao *producao, int idDiaDaProducao) {
+void atualizarProducao(struct Estoque *estoque, struct Producao *producao, int idDiaDaProducao) {
     printf("\n-> %s -> %s -> Atualizar producao de %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_PRODUCAO,
            producao->producaoDiasDaSemana[idDiaDaProducao].nome);
     int quantidadeInformada = -1;
@@ -169,7 +169,33 @@ void atualizarProducao(struct  Estoque *estoque, struct Producao *producao, int 
 
     printf("\n");
     if (quantidadeInformada >= 0) {
-        producao->producaoDiasDaSemana[idDiaDaProducao].totalMarmitasProduizadas = quantidadeInformada;
+
+        if (podeCadastrarProducao(estoque, quantidadeInformada)) {
+            producao->producaoDiasDaSemana[idDiaDaProducao].totalMarmitasProduizadas = quantidadeInformada;
+
+            for (int i = 0; i < TOTAL_INSUMOS; ++i) {
+                struct Insumo *insumo = &estoque->insumos[i];
+                int insumoGasto = insumo->quantiaPorMarmita * quantidadeInformada;
+                insumo->quantidadeEmEstoque = insumo->quantidadeEmEstoque - insumoGasto;
+            }
+        } else {
+            printf("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII\n");
+            printf("IIIIIIII Você não tem insumo o suficiente para a produção de %d marmitas!!! IIIIIIII\n",
+                   quantidadeInformada);
+            printf("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII\n\n");
+
+            printf("Deseja atualizar seu estualizar seu estoque agora? SIM --> 1, NÂO --> qualquer coisa: ");
+
+            int opcaoSelecionada;
+
+            scanf("%d", &opcaoSelecionada);
+
+            if (opcaoSelecionada == 1) {
+                cadastrarEstoque(estoque);
+                atualizarProducao(estoque, producao, idDiaDaProducao);
+            }
+        }
+
     } else {
         printf(DADO_INVALIDO);
         atualizarProducao(estoque, producao, idDiaDaProducao);
@@ -177,7 +203,16 @@ void atualizarProducao(struct  Estoque *estoque, struct Producao *producao, int 
 }
 
 bool podeCadastrarProducao(struct Estoque *estoque, int quantiaDeMarmitas) {
+    bool temInsumoSuficiente = true;
+    for (int i = 0; i < TOTAL_INSUMOS; ++i) {
+        struct Insumo insumo = estoque->insumos[i];
+        int insumoNescerrario = insumo.quantiaPorMarmita * quantiaDeMarmitas;
 
+        if (insumoNescerrario > insumo.quantidadeEmEstoque) {
+            temInsumoSuficiente = false;
+        }
+    }
+    return temInsumoSuficiente;
 }
 
 // Imprime as informações da produção do dia da semana
