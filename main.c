@@ -504,10 +504,12 @@ void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque) {
     printf("Média de marmitas produzidas -----> %d \n", mediaProducaoMarmitas);
     printf("Média de marmitas vendidass-------> %d \n", mediaVendaMarmitas);
     printf("Média de venda de marmitas -------> R$ %.2lf \n", mediaValorVenda);
-    printf("Maior produção -------------------> %s - Marmitas produzidas: %d \n", diaMaiorVenda.nome, diaMaiorVenda.totalMarmitasProduizadas);
-    printf("Menor produção -------------------> %s - Marmitas produzidas: %d \n", diaMenorProducao.nome, diaMenorProducao.totalMarmitasProduizadas);
-    printf("Maior venda ----------------------> %s - Marmitas vendidas: %d \n", diaMaiorVenda.nome, diaMaiorVenda.totalMarmitasVendidas);
-    printf("Menor venda ----------------------> %s - Marmitas vendidas: %d \n", diaMenorVenda.nome, diaMenorVenda.totalMarmitasVendidas);
+    printf("Maior produção -------------------> %s - Marmitas produzidas: %d\n", diaMaiorVenda.nome, diaMaiorVenda.totalMarmitasProduizadas);
+    printf("Menor produção -------------------> %s - Marmitas produzidas: %d\n", diaMenorProducao.nome, diaMenorProducao.totalMarmitasProduizadas);
+    printf("Maior venda ----------------------> %s - Marmitas vendidas: %d\n", diaMaiorVenda.nome, diaMaiorVenda.totalMarmitasVendidas);
+    printf("Valor maior venda-----------------> %s - R$ %.2f\n", diaMaiorVenda.nome,  diaMaiorVenda.totalMarmitasVendidas * diaMaiorVenda.valorDaMarmita);
+    printf("Menor venda ----------------------> %s - Marmitas vendidas: %d\n", diaMenorVenda.nome, diaMenorVenda.totalMarmitasVendidas);
+    printf("Valor menor venda ----------------> %s - R$ %.2f\n", diaMenorVenda.nome, diaMenorVenda.totalMarmitasVendidas * diaMenorVenda.valorDaMarmita);
 
 
     printf("\n-------- Estatus do Estoque --------\n\n");
