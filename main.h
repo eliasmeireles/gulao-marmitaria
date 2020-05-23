@@ -140,3 +140,9 @@ void imprimirDadosDoEstoque(const struct Estoque *estoque);
 void imprimirInsumo(struct Insumo *insumo);
 
 void menuOpcoesInsumo(const struct Estoque *estoque);
+
+void imprimirMenuConsultarProducao(const struct Producao *producao);
+
+void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana);
+
+void imprimirDadosDasProducoes(const struct Producao *producao);
