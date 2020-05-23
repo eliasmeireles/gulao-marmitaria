@@ -24,6 +24,8 @@
 #define OPCAO_MENU_RELATORIO 7
 #define OPCAO_MENU_FINALIZAR 8
 
+#define TOTAL_OPCAO_MENU_PRINCIPAL 8
+
 #define TIPO_UNIDADE "unidades"
 #define TIPO_GRAMA "gramas"
 
@@ -78,7 +80,7 @@ struct Producao {
 };
 
 struct Insumo {
-    int id;
+    int codigo;
     int quantidade;
     char *nome;
     char *tipoMedia;

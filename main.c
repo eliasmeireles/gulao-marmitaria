@@ -89,13 +89,13 @@ void opcaoMenuPrincipal(struct Producao *producao, struct Estoque *estoque, int 
 // Inicializa a lista de produção semanal com quantidade de
 // marmitas produzidas no dia com o valor em 0.
 void inicializarProducao(struct Producao *producao) {
-    struct DiaDaSemana domingo = {ID_DIA_DOMINGO, DIA_DOMINGO, 0};
-    struct DiaDaSemana sengunda = {ID_DIA_SEGUNDA, DIA_SEGUNDA, 0};
-    struct DiaDaSemana terca = {ID_DIA_TERCA, DIA_TERCA, 0};
-    struct DiaDaSemana quarta = {ID_DIA_QUARTA, DIA_QUARTA, 0};
-    struct DiaDaSemana quinta = {ID_DIA_QUINTA, DIA_QUINTA, 0};
-    struct DiaDaSemana sexta = {ID_DIA_SEXTA, DIA_SEXTA, 0};
-    struct DiaDaSemana sabado = {ID_DIA_SABADO, DIA_SABADO, 0};
+    struct DiaDaSemana domingo = {ID_DIA_DOMINGO, DIA_DOMINGO, 0, 0};
+    struct DiaDaSemana sengunda = {ID_DIA_SEGUNDA, DIA_SEGUNDA, 0, 0};
+    struct DiaDaSemana terca = {ID_DIA_TERCA, DIA_TERCA, 0, 0};
+    struct DiaDaSemana quarta = {ID_DIA_QUARTA, DIA_QUARTA, 0, 0};
+    struct DiaDaSemana quinta = {ID_DIA_QUINTA, DIA_QUINTA, 0, 0};
+    struct DiaDaSemana sexta = {ID_DIA_SEXTA, DIA_SEXTA, 0, 0};
+    struct DiaDaSemana sabado = {ID_DIA_SABADO, DIA_SABADO, 0, 0};
 
     producao->producaoDiasDaSemana[0] = domingo;
     producao->producaoDiasDaSemana[1] = sengunda;
@@ -126,37 +126,25 @@ void cadastrarProducao(struct Producao *producao) {
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
 
-    if (opcaoSelecionada >= 1 && opcaoSelecionada <= TOTAL_DIAS_SEMANA + 1) {
-        switch (opcaoSelecionada - 1) {
-            case ID_DIA_DOMINGO:
-                atualizarProducao(producao, ID_DIA_DOMINGO);
-                break;
-            case ID_DIA_SEGUNDA:
-                atualizarProducao(producao, ID_DIA_SEGUNDA);
-                break;
-            case ID_DIA_QUARTA:
-                atualizarProducao(producao, ID_DIA_QUARTA);
-                break;
-            case ID_DIA_QUINTA:
-                atualizarProducao(producao, ID_DIA_QUINTA);
-                break;
-            case ID_DIA_SEXTA:
-                atualizarProducao(producao, ID_DIA_SEXTA);
-                break;
-            case ID_DIA_SABADO:
-                atualizarProducao(producao, ID_DIA_SABADO);
-                break;
-            default:
-                printf("\n");
-                int idDiaDaSemana;
-                for (idDiaDaSemana = 0; idDiaDaSemana < TOTAL_DIAS_SEMANA; ++idDiaDaSemana) {
-                    atualizarProducao(producao, idDiaDaSemana);
-                }
-                break;
+    // Valida se a opção informada é válida ou não, se não for válida
+    // solicita novamente a entrada de uma opção válida do menu.
+    if (opcaoSelecionada > 0 && opcaoSelecionada <= TOTAL_DIAS_SEMANA + 1) {
+
+        if (opcaoSelecionada == TOTAL_DIAS_SEMANA + 1) {
+            printf("\n");
+            int idDiaDaSemana;
+            for (idDiaDaSemana = 0; idDiaDaSemana < TOTAL_DIAS_SEMANA; ++idDiaDaSemana) {
+                atualizarProducao(producao, idDiaDaSemana);
+            }
+        } else {
+            atualizarProducao(producao, opcaoSelecionada);
         }
         consultarProducao(producao);
     } else {
+        // Imprime a mensagem de opção selecionada inválida
         printf(OPCAO_ERRO);
+
+        // Solicita novamente a entrada de uma opção do menu.
         cadastrarProducao(producao);
     }
 }
@@ -203,7 +191,8 @@ void voltarAoMenuAnterior() {
     scanf("%s", &continua);
 }
 
-
+// Imprime o menu com as opções disponíveis de insumos
+// no estoque a ser atualizado.
 void cadastrarEstoque(struct Estoque *estoque) {
     int opcaoSelecionada;
 
@@ -211,7 +200,7 @@ void cadastrarEstoque(struct Estoque *estoque) {
 
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
-        printf("%s: %d --> %s \n", CODIGO, estoque->insumos[i].id + 1, estoque->insumos[i].nome);
+        printf("%s: %d --> %s \n", CODIGO, estoque->insumos[i].codigo + 1, estoque->insumos[i].nome);
     }
 
     printf("%s: %d --> Atulizar todos\n\n", CODIGO, TOTAL_INSUMOS + 1);
@@ -219,54 +208,33 @@ void cadastrarEstoque(struct Estoque *estoque) {
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
 
-    if (opcaoSelecionada >= 1 && opcaoSelecionada <= TOTAL_INSUMOS + 1) {
-        switch (opcaoSelecionada - 1) {
-            case ARROZ_ID:
-                atualizarInsumo(estoque, ARROZ_ID);
-                break;
-            case FEIJAO_ID:
-                atualizarInsumo(estoque, FEIJAO_ID);
-                break;
-            case CARNE_ID:
-                atualizarInsumo(estoque, CARNE_ID);
-                break;
-            case LEGUME_ID:
-                atualizarInsumo(estoque, LEGUME_ID);
-                break;
-            case OVO_ID:
-                atualizarInsumo(estoque, OVO_ID);
-                break;
-            case EMBALAGEM_ID:
-                atualizarInsumo(estoque, EMBALAGEM_ID);
-                break;
-            default:
-                printf("\n");
-                int idDoConsumo;
-                for (idDoConsumo = 0; idDoConsumo < TOTAL_INSUMOS; ++idDoConsumo) {
-                    atualizarInsumo(estoque, idDoConsumo);
-                }
-                break;
+    // Valida a opção selecionada.
+    if (opcaoSelecionada > 0 && opcaoSelecionada <= TOTAL_INSUMOS + 1) {
+
+        if (opcaoSelecionada == TOTAL_INSUMOS + 1) {
+            printf("\n");
+            int idDoConsumo;
+
+            // Para cada insumo no estoque, será solicitado a nova quantia (válida) em
+            // gramas ou unidade para o insumo.
+            for (idDoConsumo = 0; idDoConsumo < TOTAL_INSUMOS; ++idDoConsumo) {
+                atualizarInsumo(estoque, idDoConsumo);
+            }
+        } else {
+            atualizarInsumo(estoque, opcaoSelecionada - 1);
         }
+
+        // Após concluir a atualização do estoque, imprime os
+        // dados dos insumos do estoque.
         consultarEstoque(estoque);
     } else {
+        // Se a opção selecionada não for válida
+        // será imprimida a mensagem de erro de opção inválida
         printf(OPCAO_ERRO);
+
+        // Solicita novamente a entrada de uma opção de insumo a ser atualizado.
         cadastrarEstoque(estoque);
     }
-}
-
-// Para cada insumo em estoque, será imprimido a
-// informação do nome e (tipo de media do insumo)
-// com o valor atual
-void consultarEstoque(struct Estoque *estoque) {
-    printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CONSULTAR_ESTOQUE);
-
-    int i;
-    for (i = 0; i < TOTAL_INSUMOS; ++i) {
-        struct Insumo insumo = estoque->insumos[i];
-        printf("%s --> Quantidade em estoque: %d %s\n", insumo.nome,
-               insumo.quantidade, insumo.tipoMedia);
-    }
-    voltarAoMenuAnterior();
 }
 
 // Solicita ao usuário do sistema o novo valor em (tipo de medida) para o insumo
@@ -291,7 +259,22 @@ void atualizarInsumo(struct Estoque *estoque, int idDoInsumo) {
     }
 }
 
+// Para cada insumo em estoque, será imprimido a
+// informação do nome e (tipo de media do insumo)
+// com o valor atual
+void consultarEstoque(struct Estoque *estoque) {
+    printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CONSULTAR_ESTOQUE);
 
+    int i;
+    for (i = 0; i < TOTAL_INSUMOS; ++i) {
+        struct Insumo insumo = estoque->insumos[i];
+        printf("%s --> Quantidade em estoque: %d %s\n", insumo.nome,
+               insumo.quantidade, insumo.tipoMedia);
+    }
+    voltarAoMenuAnterior();
+}
+
+// Imprime o submenu MENU_CADASTRAR_VENDA
 void menuCadastrarVendas(struct Estoque *estoque, struct Producao *producao) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_VENDA);
 
@@ -303,17 +286,17 @@ void menuCadastrarVendas(struct Estoque *estoque, struct Producao *producao) {
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
 
-    if (opcaoSelecionada >= 0 && opcaoSelecionada <= TOTAL_DIAS_SEMANA + 1) {
-        if (opcaoSelecionada != TOTAL_DIAS_SEMANA + 1) {
-            struct DiaDaSemana *semana = &producao->producaoDiasDaSemana[opcaoSelecionada - 1];
-            cadastrarVendas(estoque, semana);
-        } else {
-            int j;
-            for (j = 0; j < TOTAL_DIAS_SEMANA; ++j) {
-                struct DiaDaSemana *diaDaSemana = &producao->producaoDiasDaSemana[j];
+    // Valida a opção informada
+    if (opcaoSelecionada > 0 && opcaoSelecionada <= TOTAL_DIAS_SEMANA + 1) {
+
+        if (opcaoSelecionada == TOTAL_DIAS_SEMANA + 1) {
+            int posicaoDiaDaSemana;
+            for (posicaoDiaDaSemana = 0; posicaoDiaDaSemana < TOTAL_DIAS_SEMANA; ++posicaoDiaDaSemana) {
+                struct DiaDaSemana *diaDaSemana = &producao->producaoDiasDaSemana[posicaoDiaDaSemana];
                 cadastrarVendas(estoque, diaDaSemana);
             }
-            voltarAoMenuAnterior();
+        } else {
+            cadastrarVendas(estoque, &producao->producaoDiasDaSemana[opcaoSelecionada - 1]);
         }
     } else {
         printf(OPCAO_ERRO);
