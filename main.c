@@ -117,10 +117,11 @@ void cadastrarProducao(struct Producao *producao) {
 
     int i;
     for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-        printf("%d - %s \n", producao->producaoDiasDaSemana[i].id + 1, producao->producaoDiasDaSemana[i].nome);
+        printf("%s: %d --> %s \n", CODIGO, producao->producaoDiasDaSemana[i].id + 1,
+               producao->producaoDiasDaSemana[i].nome);
     }
 
-    printf("%d - Cadastro da semena\n", TOTAL_DIAS_SEMANA + 1);
+    printf("%s: %d --> Cadastro da semena\n", CODIGO, TOTAL_DIAS_SEMANA + 1);
     printf("Das opções acima, informe o %s para o dia da semana a ser atualizado: ", CODIGO);
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
@@ -210,10 +211,10 @@ void cadastrarEstoque(struct Estoque *estoque) {
 
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
-        printf("%d - %s \n", estoque->insumos[i].id + 1, estoque->insumos[i].nome);
+        printf("%s: %d --> %s \n", CODIGO, estoque->insumos[i].id + 1, estoque->insumos[i].nome);
     }
 
-    printf("%d - Atulizar todos\n", TOTAL_INSUMOS + 1);
+    printf("%s: %d --> Atulizar todos\n\n", CODIGO, TOTAL_INSUMOS + 1);
     printf("Das opções acima, informe o %s para o insumo a ser atualizado: ", CODIGO);
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
@@ -262,7 +263,7 @@ void consultarEstoque(struct Estoque *estoque) {
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
         struct Insumo insumo = estoque->insumos[i];
-        printf("Insumo: %s - Quantidade em estoque: %d %s\n", insumo.nome,
+        printf("%s --> Quantidade em estoque: %d %s\n", insumo.nome,
                insumo.quantidade, insumo.tipoMedia);
     }
     voltarAoMenuAnterior();
@@ -385,14 +386,14 @@ void mostrarMenuProducao(struct Producao *producao, char *opcaoFinal) {
     int i;
     for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
         struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
-        printf("%s:%d - Dia: %s\n", CODIGO, diaDaSemana.id + 1, diaDaSemana.nome);
+        printf("%s: %d --> Dia: %s\n", CODIGO, diaDaSemana.id + 1, diaDaSemana.nome);
     }
-    printf("%s:%d - %s\n", CODIGO, TOTAL_DIAS_SEMANA + 1, opcaoFinal);
+    printf("%s: %d --> %s\n", CODIGO, TOTAL_DIAS_SEMANA + 1, opcaoFinal);
 }
 
 // Imprimi as opções do menu principal da apliação.
 void mostrarOpcoesDoMenu() {
-    printf("\n\n---- Menu Principal -----\n\n");
+    printf("\n\n-------- Menu Principal --------\n\n");
     imprimirOpcaoDoMenu(OPCAO_MENU_CADASTRAR_ESTOQUE, MENU_CADASTRAR_ESTOQUE);
     imprimirOpcaoDoMenu(OPCAO_MENU_CONSULTAR_ESTOQUE, MENU_CONSULTAR_ESTOQUE);
     imprimirOpcaoDoMenu(OPCAO_MENU_CADASTRAR_PRODUCAO, MENU_CADASTRAR_PRODUCAO);
@@ -404,5 +405,5 @@ void mostrarOpcoesDoMenu() {
 }
 
 void imprimirOpcaoDoMenu(int codigo, char *nome) {
-    printf("%s:%d - %s\n", CODIGO, codigo, nome);
+    printf("%s: %d --> %s\n", CODIGO, codigo, nome);
 }
