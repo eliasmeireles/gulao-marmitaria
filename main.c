@@ -4,6 +4,8 @@ void imprimirMenuConsultarProducao(const struct Producao *producao);
 
 void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana);
 
+void imprimirDadosDasProducoes(const struct Producao *producao);
+
 int main() {
     setlocale(LC_ALL, "Portuguese");
     return selecionarOpcaoDoMenu();
@@ -128,7 +130,7 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
 
     imprimirMenuConsultarProducao(producao);
 
-    printf("%s: %d --> Cadastro da semena\n", CODIGO, TOTAL_DIAS_SEMANA + 1);
+    printf("%s: %d --> Cadastro da semana\n", CODIGO, TOTAL_DIAS_SEMANA + 1);
     printf("Das opções acima, informe o %s para o dia da semana a ser atualizado: ", CODIGO);
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
@@ -147,7 +149,7 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
         } else {
             atualizarProducao(estoque, producao, opcaoSelecionada - 1);
         }
-        consultarProducao(producao);
+        imprimirDadosDasProducoes(producao);
     } else {
         // Imprime a mensagem de opção selecionada inválida
         printf(OPCAO_ERRO);
@@ -163,6 +165,7 @@ void imprimirMenuConsultarProducao(const struct Producao *producao) {
         printf("%s: %d --> %s \n", CODIGO, producao->producaoDiasDaSemana[i].id + 1,
                producao->producaoDiasDaSemana[i].nome);
     }
+    voltarAoMenuAnterior();
 }
 
 // Solicita ao usuário do sistema o novo valor em (tipo de medida) para o insumo
@@ -236,7 +239,7 @@ void consultarProducao(struct Producao *producao) {
     int opcaoSelecionada;
     imprimirMenuConsultarProducao(producao);
 
-    printf("%s: %d --> Cadastro da semena\n", CODIGO, TOTAL_DIAS_SEMANA + 1);
+    printf("%s: %d --> Consulta da semana\n", CODIGO, TOTAL_DIAS_SEMANA + 1);
     printf("Das opções acima, informe o %s para o dia da semana a ser consultado: ", CODIGO);
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
@@ -248,11 +251,7 @@ void consultarProducao(struct Producao *producao) {
 
         if (opcaoSelecionada == TOTAL_DIAS_SEMANA + 1) {
             printf("\n");
-            int i;
-            for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-                struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
-                imprimirDadosDaProducao(&diaDaSemana);
-            }
+            imprimirDadosDasProducoes(producao);
         } else {
             printf("\n");
             struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[opcaoSelecionada - 1];
@@ -263,6 +262,14 @@ void consultarProducao(struct Producao *producao) {
         consultarProducao(producao);
     }
     voltarAoMenuAnterior();
+}
+
+void imprimirDadosDasProducoes(const struct Producao *producao) {
+    int i;
+    for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
+        struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
+        imprimirDadosDaProducao(&diaDaSemana);
+    }
 }
 
 void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana) {
