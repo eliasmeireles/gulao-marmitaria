@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MENU_PRINCIPAL "Menu Principal"
 
@@ -23,8 +24,6 @@
 #define OPCAO_MENU_CONSULTAR_VENDA 6
 #define OPCAO_MENU_RELATORIO 7
 #define OPCAO_MENU_FINALIZAR 8
-
-#define TOTAL_OPCAO_MENU_PRINCIPAL 8
 
 #define TIPO_UNIDADE "unidades"
 #define TIPO_GRAMA "gramas"
@@ -81,7 +80,8 @@ struct Producao {
 
 struct Insumo {
     int codigo;
-    int quantidade;
+    int quantidadeEmEstoque;
+    int quantiaPorMarmita;
     char *nome;
     char *tipoMedia;
 };
@@ -109,11 +109,15 @@ void cadastrarEstoque(struct Estoque *estoque);
 
 void consultarEstoque(struct Estoque *estoque);
 
+bool estoqueCarregado(struct Estoque *estoque);
+
+bool podeCadastrarProducao(struct Estoque *estoque, int quantiaDeMarmitas);
+
 void inicializarProducao(struct Producao *producao);
 
-void cadastrarProducao(struct Producao *producao);
+void cadastrarProducao(struct  Estoque *estoque, struct Producao *producao);
 
-void atualizarProducao(struct Producao *producao, int idDiaDaProducao);
+void atualizarProducao(struct  Estoque *estoque, struct Producao *producao, int idDiaDaProducao);
 
 void consultarProducao(struct Producao *producao);
 
