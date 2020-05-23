@@ -150,6 +150,7 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
             atualizarProducao(estoque, producao, opcaoSelecionada - 1);
         }
         imprimirDadosDasProducoes(producao);
+        voltarAoMenuAnterior();
     } else {
         // Imprime a mensagem de opção selecionada inválida
         printf(OPCAO_ERRO);
@@ -165,7 +166,6 @@ void imprimirMenuConsultarProducao(const struct Producao *producao) {
         printf("%s: %d --> %s \n", CODIGO, producao->producaoDiasDaSemana[i].id + 1,
                producao->producaoDiasDaSemana[i].nome);
     }
-    voltarAoMenuAnterior();
 }
 
 // Solicita ao usuário do sistema o novo valor em (tipo de medida) para o insumo
