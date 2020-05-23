@@ -1,6 +1,8 @@
 #include "main.h"
 
-void imprimirDadosDoEstoque(const struct Estoque *estoque);
+void imprimirMenuConsultarProducao(const struct Producao *producao);
+
+void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana);
 
 int main() {
     setlocale(LC_ALL, "Portuguese");
@@ -28,6 +30,7 @@ int selecionarOpcaoDoMenu() {
         printf("\nDas opções acima, informe o código menu: ");
         fflush(stdin);
         scanf("%d", &opcaoMenuSelecionada);
+        printf("\n");
 
         if (opcaoMenuSelecionada < 1 || opcaoMenuSelecionada > 8) {
             printf("\n%s", OPCAO_ERRO);
@@ -123,16 +126,13 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
 
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_PRODUCAO);
 
-    int i;
-    for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-        printf("%s: %d --> %s \n", CODIGO, producao->producaoDiasDaSemana[i].id + 1,
-               producao->producaoDiasDaSemana[i].nome);
-    }
+    imprimirMenuConsultarProducao(producao);
 
     printf("%s: %d --> Cadastro da semena\n", CODIGO, TOTAL_DIAS_SEMANA + 1);
     printf("Das opções acima, informe o %s para o dia da semana a ser atualizado: ", CODIGO);
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
+    printf("\n");
 
     // Valida se a opção informada é válida ou não, se não for válida
     // solicita novamente a entrada de uma opção válida do menu.
@@ -154,6 +154,14 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
 
         // Solicita novamente a entrada de uma opção do menu.
         cadastrarProducao(estoque, producao);
+    }
+}
+
+void imprimirMenuConsultarProducao(const struct Producao *producao) {
+    int i;
+    for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
+        printf("%s: %d --> %s \n", CODIGO, producao->producaoDiasDaSemana[i].id + 1,
+               producao->producaoDiasDaSemana[i].nome);
     }
 }
 
@@ -225,12 +233,40 @@ bool podeCadastrarProducao(struct Estoque *estoque, int quantiaDeMarmitas) {
 void consultarProducao(struct Producao *producao) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CONSULTAR_PRODUCAO);
 
-    int i;
-    for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-        struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
-        printf("Dia: %s - Marmitas produzidas: %d\n", diaDaSemana.nome, diaDaSemana.totalMarmitasProduizadas);
+    int opcaoSelecionada;
+    imprimirMenuConsultarProducao(producao);
+
+    printf("%s: %d --> Cadastro da semena\n", CODIGO, TOTAL_DIAS_SEMANA + 1);
+    printf("Das opções acima, informe o %s para o dia da semana a ser consultado: ", CODIGO);
+    fflush(stdin);
+    scanf("%d", &opcaoSelecionada);
+    printf("\n");
+
+    // Valida se a opção informada é válida ou não, se não for válida
+    // solicita novamente a entrada de uma opção válida do menu.
+    if (opcaoSelecionada > 0 && opcaoSelecionada <= TOTAL_DIAS_SEMANA + 1) {
+
+        if (opcaoSelecionada == TOTAL_DIAS_SEMANA + 1) {
+            printf("\n");
+            int i;
+            for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
+                struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
+                imprimirDadosDaProducao(&diaDaSemana);
+            }
+        } else {
+            printf("\n");
+            struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[opcaoSelecionada - 1];
+            imprimirDadosDaProducao(&diaDaSemana);
+        }
+    } else {
+        printf(OPCAO_ERRO);
+        consultarProducao(producao);
     }
     voltarAoMenuAnterior();
+}
+
+void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana) {
+    printf("Dia: %s - Marmitas produzidas: %d\n", (*diaDaSemana).nome, (*diaDaSemana).totalMarmitasProduizadas);
 }
 
 
@@ -261,15 +297,13 @@ void cadastrarEstoque(struct Estoque *estoque) {
 
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_ESTOQUE);
 
-    int i;
-    for (i = 0; i < TOTAL_INSUMOS; ++i) {
-        printf("%s: %d --> %s \n", CODIGO, estoque->insumos[i].codigo + 1, estoque->insumos[i].nome);
-    }
+    menuOpcoesInsumo(estoque);
 
     printf("%s: %d --> Atulizar todos\n\n", CODIGO, TOTAL_INSUMOS + 1);
     printf("Das opções acima, informe o %s para o insumo a ser atualizado: ", CODIGO);
     fflush(stdin);
     scanf("%d", &opcaoSelecionada);
+    printf("\n");
 
     // Valida a opção selecionada.
     if (opcaoSelecionada > 0 && opcaoSelecionada <= TOTAL_INSUMOS + 1) {
@@ -289,7 +323,7 @@ void cadastrarEstoque(struct Estoque *estoque) {
 
         // Após concluir a atualização do estoque, imprime os
         // dados dos insumos do estoque.
-        consultarEstoque(estoque);
+        imprimirDadosDoEstoque(estoque);
     } else {
         // Se a opção selecionada não for válida
         // será imprimida a mensagem de erro de opção inválida
@@ -300,12 +334,20 @@ void cadastrarEstoque(struct Estoque *estoque) {
     }
 }
 
+void menuOpcoesInsumo(const struct Estoque *estoque) {
+    int i;
+    for (i = 0; i < TOTAL_INSUMOS; ++i) {
+        printf("%s: %d --> %s \n", CODIGO, estoque->insumos[i].codigo + 1, estoque->insumos[i].nome);
+    }
+}
+
 // Solicita ao usuário do sistema o novo valor em (tipo de medida) para o insumo
 // a ser atualizado no estoque.
 void atualizarInsumo(struct Estoque *estoque, int idDoInsumo) {
     printf("\n-> %s -> %s -> Atualizar insumo %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_ESTOQUE,
            estoque->insumos[idDoInsumo].nome);
     int quantidadeInformada = -1;
+
     printf("Informe a quantidade (em %s) para %s no estoque: ",
            estoque->insumos[idDoInsumo].tipoMedia,
            estoque->insumos[idDoInsumo].nome);
@@ -327,17 +369,44 @@ void atualizarInsumo(struct Estoque *estoque, int idDoInsumo) {
 // com o valor atual
 void consultarEstoque(struct Estoque *estoque) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CONSULTAR_ESTOQUE);
-    imprimirDadosDoEstoque(estoque);
+
+    menuOpcoesInsumo(estoque);
+
+    int opcaoSelecionada;
+    printf("%s: %d --> Consultar todos\n\n", CODIGO, TOTAL_INSUMOS + 1);
+    printf("Das opções acima, informe o %s para o insumo a ser consultado: ", CODIGO);
+    fflush(stdin);
+    scanf("%d", &opcaoSelecionada);
+
+    printf("\n");
+
+    if (opcaoSelecionada > 0 && opcaoSelecionada <= TOTAL_INSUMOS + 1) {
+        if (opcaoSelecionada == TOTAL_INSUMOS + 1) {
+            imprimirDadosDoEstoque(estoque);
+        } else {
+            struct Insumo insumo = estoque->insumos[opcaoSelecionada - 1];
+            imprimirInsumo(&insumo);
+        }
+    } else {
+        printf(OPCAO_ERRO);
+        consultarEstoque(estoque);
+    }
+
     voltarAoMenuAnterior();
 }
 
 void imprimirDadosDoEstoque(const struct Estoque *estoque) {
+    printf("\n");
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
         struct Insumo insumo = estoque->insumos[i];
-        printf("%s --> Quantidade em estoque: %d %s\n", insumo.nome,
-               insumo.quantidadeEmEstoque, insumo.tipoMedia);
+        imprimirInsumo(&insumo);
     }
+}
+
+void imprimirInsumo(struct Insumo *insumo) {
+    printf("%s --> Quantidade em estoque: %d %s\n", insumo->nome,
+           insumo->quantidadeEmEstoque, insumo->tipoMedia);
 }
 
 // Imprime o submenu MENU_CADASTRAR_VENDA
@@ -417,7 +486,7 @@ void menuConsultarVendas(struct Producao *producao) {
 }
 
 void consultarVendaDoDia(const struct DiaDaSemana diaDaSemana) {
-    printf("\n");
+    printf("\n\n");
     printf("Dia ----------------------> %s\n", diaDaSemana.nome);
     printf("Marmitas produzidas ------> %d\n", diaDaSemana.totalMarmitasProduizadas);
     printf("Marmitas Vendidas --------> %d\n", diaDaSemana.totalMarmitasVendidas);
@@ -504,12 +573,18 @@ void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque) {
     printf("Média de marmitas produzidas -----> %d \n", mediaProducaoMarmitas);
     printf("Média de marmitas vendidass-------> %d \n", mediaVendaMarmitas);
     printf("Média de venda de marmitas -------> R$ %.2lf \n", mediaValorVenda);
-    printf("Maior produção -------------------> %s - Marmitas produzidas: %d\n", diaMaiorVenda.nome, diaMaiorVenda.totalMarmitasProduizadas);
-    printf("Menor produção -------------------> %s - Marmitas produzidas: %d\n", diaMenorProducao.nome, diaMenorProducao.totalMarmitasProduizadas);
-    printf("Maior venda ----------------------> %s - Marmitas vendidas: %d\n", diaMaiorVenda.nome, diaMaiorVenda.totalMarmitasVendidas);
-    printf("Valor maior venda-----------------> %s - R$ %.2f\n", diaMaiorVenda.nome,  diaMaiorVenda.totalMarmitasVendidas * diaMaiorVenda.valorDaMarmita);
-    printf("Menor venda ----------------------> %s - Marmitas vendidas: %d\n", diaMenorVenda.nome, diaMenorVenda.totalMarmitasVendidas);
-    printf("Valor menor venda ----------------> %s - R$ %.2f\n", diaMenorVenda.nome, diaMenorVenda.totalMarmitasVendidas * diaMenorVenda.valorDaMarmita);
+    printf("Maior produção -------------------> %s - Marmitas produzidas: %d\n", diaMaiorVenda.nome,
+           diaMaiorVenda.totalMarmitasProduizadas);
+    printf("Menor produção -------------------> %s - Marmitas produzidas: %d\n", diaMenorProducao.nome,
+           diaMenorProducao.totalMarmitasProduizadas);
+    printf("Maior venda ----------------------> %s - Marmitas vendidas: %d\n", diaMaiorVenda.nome,
+           diaMaiorVenda.totalMarmitasVendidas);
+    printf("Valor maior venda-----------------> %s - R$ %.2f\n", diaMaiorVenda.nome,
+           diaMaiorVenda.totalMarmitasVendidas * diaMaiorVenda.valorDaMarmita);
+    printf("Menor venda ----------------------> %s - Marmitas vendidas: %d\n", diaMenorVenda.nome,
+           diaMenorVenda.totalMarmitasVendidas);
+    printf("Valor menor venda ----------------> %s - R$ %.2f\n", diaMenorVenda.nome,
+           diaMenorVenda.totalMarmitasVendidas * diaMenorVenda.valorDaMarmita);
 
 
     printf("\n-------- Estatus do Estoque --------\n\n");

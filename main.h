@@ -134,3 +134,9 @@ void consultarVendaDoDia(struct DiaDaSemana diaDaSemana);
 void mostrarMenuProducao(struct Producao *producao, char *opcaoFinal);
 
 void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque);
+
+void imprimirDadosDoEstoque(const struct Estoque *estoque);
+
+void imprimirInsumo(struct Insumo *insumo);
+
+void menuOpcoesInsumo(const struct Estoque *estoque);
