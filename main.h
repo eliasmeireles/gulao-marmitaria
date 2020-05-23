@@ -2,6 +2,7 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 
 #define MENU_PRINCIPAL "Menu Principal"
 
@@ -72,6 +73,7 @@ struct DiaDaSemana {
     char *nome;
     int totalMarmitasProduizadas;
     int totalMarmitasVendidas;
+    float valorDaMarmita;
 };
 
 struct Producao {
@@ -130,3 +132,5 @@ void voltarAoMenuAnterior();
 void consultarVendaDoDia(struct DiaDaSemana diaDaSemana);
 
 void mostrarMenuProducao(struct Producao *producao, char *opcaoFinal);
+
+void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque);
