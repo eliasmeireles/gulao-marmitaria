@@ -92,6 +92,8 @@ struct Estoque {
     struct Insumo insumos[TOTAL_INSUMOS];
 };
 
+void menuPrincipal();
+
 void menuConsultarVendas(struct Producao *producao);
 
 void inicializarEstoque(struct Estoque *estoque);
@@ -101,8 +103,6 @@ void mostrarOpcoesDoMenu();
 void atualizarInsumo(struct Estoque *estoque, int idDoInsumo);
 
 void imprimirOpcaoDoMenu(int codigo, char *nome);
-
-int selecionarOpcaoDoMenu();
 
 void
 opcaoMenuPrincipal(struct Producao *producao, struct Estoque *estoque, int opcaoDoMenuPrincipal);
@@ -117,9 +117,9 @@ bool podeCadastrarProducao(struct Estoque *estoque, int quantiaDeMarmitas);
 
 void inicializarProducao(struct Producao *producao);
 
-void cadastrarProducao(struct  Estoque *estoque, struct Producao *producao);
+void cadastrarProducao(struct Estoque *estoque, struct Producao *producao);
 
-void atualizarProducao(struct  Estoque *estoque, struct Producao *producao, int idDiaDaProducao);
+void atualizarProducao(struct Estoque *estoque, struct Producao *producao, int idDiaDaProducao);
 
 void consultarProducao(struct Producao *producao);
 
@@ -135,14 +135,16 @@ void mostrarMenuProducao(struct Producao *producao, char *opcaoFinal);
 
 void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque);
 
-void imprimirDadosDoEstoque(const struct Estoque *estoque);
+void imprimirDadosDoEstoque(struct Estoque *estoque);
 
 void imprimirInsumo(struct Insumo *insumo);
 
-void menuOpcoesInsumo(const struct Estoque *estoque);
+void menuOpcoesInsumo(struct Estoque *estoque);
 
-void imprimirMenuConsultarProducao(const struct Producao *producao);
+void imprimirMenuConsultarProducao(struct Producao *producao);
 
 void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana);
 
-void imprimirDadosDasProducoes(const struct Producao *producao);
+void imprimirDadosDasProducoes(struct Producao *producao);
+
+void atualizaEstoque(struct Estoque *estoque, int marmitasProduzidas);
