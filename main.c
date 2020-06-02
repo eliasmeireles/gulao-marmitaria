@@ -1,6 +1,12 @@
 #include "main.h"
 
-/// Elias Meireles Ferreira
+
+/**
+ * Elias Meireles
+ * Kaique Cairan
+ *
+ * */
+
 int main() {
     setlocale(LC_ALL, "Portuguese");
     menuPrincipal();
@@ -564,7 +570,7 @@ void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque) {
     for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
         struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
 
-        totalMarmitasProduzidas += diaDaSemana.totalMarmitasProduizadas;
+        totalMarmitasProduzidas += diaDaSemana.totalMarmitasProduizadas + diaDaSemana.totalMarmitasVendidas;
         totalMarmitasVendidas += diaDaSemana.totalMarmitasVendidas;
         totalValorVendas += diaDaSemana.totalMarmitasVendidas * diaDaSemana.valorDaMarmita;
         totalValorVendas += diaDaSemana.totalMarmitasVendidas * diaDaSemana.valorDaMarmita;
