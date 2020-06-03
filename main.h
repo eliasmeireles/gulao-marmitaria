@@ -8,8 +8,8 @@
 
 #define OPCAO_ERRO "A opção escolhinda não é válida, tente novamente!\n"
 #define DADO_INVALIDO "A infomação inserida não é válida, tente novamente!\n"
-#define MENU_CADASTRAR_ESTOQUE "Cadastrar Estoque"
-#define MENU_CONSULTAR_ESTOQUE "Consultar Estoque"
+#define MENU_CADASTRAR_ESTOQUE "Cadastrar estoque"
+#define MENU_CONSULTAR_ESTOQUE "Consultar estoque"
 #define MENU_CADASTRAR_PRODUCAO "Cadastrar Produção"
 #define MENU_CONSULTAR_PRODUCAO "Consultar Produção"
 #define MENU_CADASTRAR_VENDA "Cadastrar Vendas"
@@ -68,7 +68,7 @@
 #define VALOR_MARMITA_DOMINGO_SABADO 15.99
 #define VALOR_MARMITA_DIA_NORMAL 12.99
 
-struct DiaDaSemana {
+struct diaDaSemana {
     int id;
     char *nome;
     int totalMarmitasProduizadas;
@@ -76,11 +76,13 @@ struct DiaDaSemana {
     float valorDaMarmita;
 };
 
-struct Producao {
-    struct DiaDaSemana producaoDiasDaSemana[TOTAL_DIAS_SEMANA];
+typedef struct diaDaSemana DiaDaSemana;
+
+struct producao {
+    DiaDaSemana producaoDiasDaSemana[TOTAL_DIAS_SEMANA];
 };
 
-struct Insumo {
+struct insumo {
     int codigo;
     int quantidadeEmEstoque;
     int quantiaPorMarmita;
@@ -88,63 +90,69 @@ struct Insumo {
     char *tipoMedia;
 };
 
-struct Estoque {
-    struct Insumo insumos[TOTAL_INSUMOS];
+typedef struct insumo Insumo;
+
+struct estoque {
+    Insumo insumos[TOTAL_INSUMOS];
 };
+
+typedef struct estoque Estoque;
+
+typedef struct producao Producao;
 
 void menuPrincipal();
 
-void menuConsultarVendas(struct Producao *producao);
+void menuConsultarVendas(Producao *producao);
 
-void inicializarEstoque(struct Estoque *estoque);
+void inicializarEstoque(Estoque *estoque);
 
 void mostrarOpcoesDoMenu();
 
-void atualizarInsumo(struct Estoque *estoque, int idDoInsumo);
+void atualizarInsumo(Estoque *estoque, int idDoInsumo);
 
 void imprimirOpcaoDoMenu(int codigo, char *nome);
 
 void
-opcaoMenuPrincipal(struct Producao *producao, struct Estoque *estoque, int opcaoDoMenuPrincipal);
+opcaoMenuPrincipal(Producao *producao, Estoque *estoque, int opcaoDoMenuPrincipal);
 
-void cadastrarEstoque(struct Estoque *estoque);
+void cadastrarEstoque(Estoque *estoque);
 
-void consultarEstoque(struct Estoque *estoque);
+void consultarEstoque(Estoque *estoque);
 
-bool estoqueCarregado(struct Estoque *estoque);
+bool estoqueCarregado(Estoque *estoque);
 
-bool podeCadastrarProducao(struct Estoque *estoque, int quantiaDeMarmitas);
+bool podeCadastrarProducao(Estoque *estoque, int quantiaDeMarmitas);
 
-void inicializarProducao(struct Producao *producao);
+void inicializarProducao(Producao *producao);
 
-void cadastrarProducao(struct Estoque *estoque, struct Producao *producao);
+void cadastrarProducao(Estoque *estoque, Producao *producao);
 
-void atualizarProducao(struct Estoque *estoque, struct Producao *producao, int idDiaDaProducao);
+void atualizarProducao(Estoque *estoque, Producao *producao, int idDiaDaProducao);
 
-void consultarProducao(struct Producao *producao);
+void consultarProducao(Producao *producao);
 
-void menuCadastrarVendas(struct Estoque *estoque, struct Producao *producao);
+void menuCadastrarVendas(Estoque *estoque, Producao *producao);
 
-void cadastrarVendas(struct Estoque *estoque, struct DiaDaSemana *diaDaSemana);
+void cadastrarVendas(Estoque *estoque, DiaDaSemana *diaDaSemana);
 
 void voltarAoMenuAnterior();
 
-void consultarVendaDoDia(struct DiaDaSemana diaDaSemana);
+void consultarVendaDoDia(DiaDaSemana diaDaSemana);
 
-void mostrarMenuProducao(struct Producao *producao, char *opcaoFinal);
+void mostrarMenuProducao(Producao *producao, char *opcaoFinal);
 
-void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque);
+void imprimirRelatorio(Producao *producao, Estoque *estoque);
 
-void imprimirDadosDoEstoque(struct Estoque *estoque);
+void imprimirDadosDoEstoque(Estoque *estoque);
 
-void imprimirInsumo(struct Insumo *insumo);
+void imprimirInsumo(Insumo *insumo);
 
-void menuOpcoesInsumo(struct Estoque *estoque);
+void menuOpcoesInsumo(Estoque *estoque);
 
-void imprimirMenuConsultarProducao(struct Producao *producao);
+void imprimirMenuConsultarProducao(Producao *producao);
 
-void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana);
+void imprimirDadosDaProducao(DiaDaSemana *diaDaSemana);
 
-void imprimirDadosDasProducoes(struct Producao *producao);
+void imprimirDadosDasProducoes(Producao *producao);
 
-void atualizaEstoque(struct Estoque *estoque, int marmitasProduzidas);
+void atualizaEstoque(Estoque *estoque, int marmitasProduzidas);

@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 /**
  * Elias Meireles
  * Kaique Cairan
@@ -17,8 +16,8 @@ int main() {
 //// e continuará a execução até que o usuário
 //// finalize o programa selecionando a opão pra finalizar.
 void menuPrincipal() {
-    struct Estoque estoque;
-    struct Producao producao;
+    Estoque estoque;
+    Producao producao;
 
     inicializarEstoque(&estoque);
     inicializarProducao(&producao);
@@ -46,13 +45,13 @@ void menuPrincipal() {
 
 //// Inicializa o estoque com todos os insumos predefinidos
 //// com o valor do (tipo de medida) em 0.
-void inicializarEstoque(struct Estoque *estoque) {
-    struct Insumo arroz = {ARROZ_ID, 0, 120, ARROZ, TIPO_GRAMA};
-    struct Insumo feijao = {FEIJAO_ID, 0, 80, FEIJAO, TIPO_GRAMA};
-    struct Insumo carne = {CARNE_ID, 0, 120, CARNE, TIPO_GRAMA};
-    struct Insumo legume = {LEGUME_ID, 0, 120, LEGUME, TIPO_GRAMA};
-    struct Insumo ovo = {OVO_ID, 0, 1, OVO, TIPO_UNIDADE};
-    struct Insumo embalagem = {EMBALAGEM_ID, 0, 1, EMBALAGEM, TIPO_UNIDADE};
+void inicializarEstoque(Estoque *estoque) {
+    Insumo arroz = {ARROZ_ID, 0, 120, ARROZ, TIPO_GRAMA};
+    Insumo feijao = {FEIJAO_ID, 0, 80, FEIJAO, TIPO_GRAMA};
+    Insumo carne = {CARNE_ID, 0, 120, CARNE, TIPO_GRAMA};
+    Insumo legume = {LEGUME_ID, 0, 120, LEGUME, TIPO_GRAMA};
+    Insumo ovo = {OVO_ID, 0, 1, OVO, TIPO_UNIDADE};
+    Insumo embalagem = {EMBALAGEM_ID, 0, 1, EMBALAGEM, TIPO_UNIDADE};
 
     estoque->insumos[0] = arroz;
     estoque->insumos[1] = feijao;
@@ -65,7 +64,7 @@ void inicializarEstoque(struct Estoque *estoque) {
 //// Avalia a opção informada pelo usuário e executa a ação relativa
 //// a opção selecionada, se a opção for de finalizar o programa (default da condição do switch case)
 //// o programa será finalizado.
-void opcaoMenuPrincipal(struct Producao *producao, struct Estoque *estoque, int opcaoDoMenuPrincipal) {
+void opcaoMenuPrincipal(Producao *producao, Estoque *estoque, int opcaoDoMenuPrincipal) {
     switch (opcaoDoMenuPrincipal) {
         case OPCAO_MENU_CADASTRAR_ESTOQUE:
             cadastrarEstoque(estoque);
@@ -95,14 +94,14 @@ void opcaoMenuPrincipal(struct Producao *producao, struct Estoque *estoque, int 
 
 //// Inicializa a lista de produção semanal com quantidade de
 //// marmitas produzidas no dia com o valor em 0.
-void inicializarProducao(struct Producao *producao) {
-    struct DiaDaSemana domingo = {ID_DIA_DOMINGO, DIA_DOMINGO, 0, 0, VALOR_MARMITA_DOMINGO_SABADO};
-    struct DiaDaSemana sengunda = {ID_DIA_SEGUNDA, DIA_SEGUNDA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
-    struct DiaDaSemana terca = {ID_DIA_TERCA, DIA_TERCA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
-    struct DiaDaSemana quarta = {ID_DIA_QUARTA, DIA_QUARTA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
-    struct DiaDaSemana quinta = {ID_DIA_QUINTA, DIA_QUINTA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
-    struct DiaDaSemana sexta = {ID_DIA_SEXTA, DIA_SEXTA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
-    struct DiaDaSemana sabado = {ID_DIA_SABADO, DIA_SABADO, 0, 0, VALOR_MARMITA_DOMINGO_SABADO};
+void inicializarProducao(Producao *producao) {
+    DiaDaSemana domingo = {ID_DIA_DOMINGO, DIA_DOMINGO, 0, 0, VALOR_MARMITA_DOMINGO_SABADO};
+    DiaDaSemana sengunda = {ID_DIA_SEGUNDA, DIA_SEGUNDA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
+    DiaDaSemana terca = {ID_DIA_TERCA, DIA_TERCA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
+    DiaDaSemana quarta = {ID_DIA_QUARTA, DIA_QUARTA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
+    DiaDaSemana quinta = {ID_DIA_QUINTA, DIA_QUINTA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
+    DiaDaSemana sexta = {ID_DIA_SEXTA, DIA_SEXTA, 0, 0, VALOR_MARMITA_DIA_NORMAL};
+    DiaDaSemana sabado = {ID_DIA_SABADO, DIA_SABADO, 0, 0, VALOR_MARMITA_DOMINGO_SABADO};
 
     producao->producaoDiasDaSemana[0] = domingo;
     producao->producaoDiasDaSemana[1] = sengunda;
@@ -117,7 +116,7 @@ void inicializarProducao(struct Producao *producao) {
 //// Apresenta o menu com as opções do menu com as
 //// opções para cadastrar uma produção de um determinado dia da
 //// semana ou da semana inteira.
-void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
+void cadastrarProducao(Estoque *estoque, Producao *producao) {
     if (!estoqueCarregado(estoque)) {
         printf("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII\n");
         printf("IIIIIIIIII Você precisa recarregar seu estoque para cadastrar uma produção!!! IIIIIIIIIIIIIIIIII\n");
@@ -162,7 +161,7 @@ void cadastrarProducao(struct Estoque *estoque, struct Producao *producao) {
 }
 
 ///// Imprime o menu com as opção de produção
-void imprimirMenuConsultarProducao(struct Producao *producao) {
+void imprimirMenuConsultarProducao(Producao *producao) {
     int i;
     for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
         printf("%s: %d --> %s \n", CODIGO, producao->producaoDiasDaSemana[i].id + 1,
@@ -172,7 +171,7 @@ void imprimirMenuConsultarProducao(struct Producao *producao) {
 
 //// Solicita ao usuário do sistema o novo valor em (tipo de medida) para o insumo
 //// a ser atualizado no producao.
-void atualizarProducao(struct Estoque *estoque, struct Producao *producao, int idDiaDaProducao) {
+void atualizarProducao(Estoque *estoque, Producao *producao, int idDiaDaProducao) {
     printf("\n-> %s -> %s -> Atualizar producao de %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_PRODUCAO,
            producao->producaoDiasDaSemana[idDiaDaProducao].nome);
     int marmitasProduzidas = -1;
@@ -216,10 +215,10 @@ void atualizarProducao(struct Estoque *estoque, struct Producao *producao, int i
 
 /// Atualiza a quantidade disponivel em estoque do insumos
 /// com base na quantia de marmitas produzidas.
-void atualizaEstoque(struct Estoque *estoque, int marmitasProduzidas) {
+void atualizaEstoque(Estoque *estoque, int marmitasProduzidas) {
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
-        struct Insumo *insumo = &estoque->insumos[i];
+        Insumo *insumo = &estoque->insumos[i];
         int insumoGasto = insumo->quantiaPorMarmita * marmitasProduzidas;
         insumo->quantidadeEmEstoque = insumo->quantidadeEmEstoque - insumoGasto;
     }
@@ -228,10 +227,10 @@ void atualizaEstoque(struct Estoque *estoque, int marmitasProduzidas) {
 
 ///// Verifica o tem insumo o suficiente para produzir a quantias
 ///// de marmitas informada
-bool podeCadastrarProducao(struct Estoque *estoque, int quantiaDeMarmitas) {
+bool podeCadastrarProducao(Estoque *estoque, int quantiaDeMarmitas) {
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
-        struct Insumo insumo = estoque->insumos[i];
+        Insumo insumo = estoque->insumos[i];
         int insumoNescerrario = insumo.quantiaPorMarmita * quantiaDeMarmitas;
 
         if (insumoNescerrario > insumo.quantidadeEmEstoque) {
@@ -244,7 +243,7 @@ bool podeCadastrarProducao(struct Estoque *estoque, int quantiaDeMarmitas) {
 ///// Imprime as informações da produção do dia da semana
 ///// informando o nome do dia da semana e a quantia de
 ///// marmitas produzidas.
-void consultarProducao(struct Producao *producao) {
+void consultarProducao(Producao *producao) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CONSULTAR_PRODUCAO);
 
     int opcaoSelecionada;
@@ -265,7 +264,7 @@ void consultarProducao(struct Producao *producao) {
             imprimirDadosDasProducoes(producao);
         } else {
             printf("\n");
-            struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[opcaoSelecionada - 1];
+            DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[opcaoSelecionada - 1];
             imprimirDadosDaProducao(&diaDaSemana);
         }
     } else {
@@ -276,16 +275,16 @@ void consultarProducao(struct Producao *producao) {
 }
 
 ///// Imprime os dados da produção semanal
-void imprimirDadosDasProducoes(struct Producao *producao) {
+void imprimirDadosDasProducoes(Producao *producao) {
     int i;
     for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-        struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
+        DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
         imprimirDadosDaProducao(&diaDaSemana);
     }
 }
 
 ///// Imprime os dados da produção do dias
-void imprimirDadosDaProducao(struct DiaDaSemana *diaDaSemana) {
+void imprimirDadosDaProducao(DiaDaSemana *diaDaSemana) {
     printf("Dia: %s - Marmitas produzidas: %d\n", (*diaDaSemana).nome, (*diaDaSemana).totalMarmitasProduizadas);
 }
 
@@ -298,11 +297,11 @@ void voltarAoMenuAnterior() {
 }
 
 /// Verifica se tem insumo para o cadastro de ao menos uma marmita.
-bool estoqueCarregado(struct Estoque *estoque) {
+bool estoqueCarregado(Estoque *estoque) {
     int posicaoInsumo;
 
     for (posicaoInsumo = 0; posicaoInsumo < TOTAL_INSUMOS; posicaoInsumo++) {
-        struct Insumo insumo = estoque->insumos[posicaoInsumo];
+        Insumo insumo = estoque->insumos[posicaoInsumo];
         if (insumo.quantidadeEmEstoque < insumo.quantiaPorMarmita) {
             return false;
         }
@@ -312,7 +311,7 @@ bool estoqueCarregado(struct Estoque *estoque) {
 
 ///// Imprime o menu com as opções disponíveis de insumos
 ///// no estoque a ser atualizado.
-void cadastrarEstoque(struct Estoque *estoque) {
+void cadastrarEstoque(Estoque *estoque) {
     int opcaoSelecionada;
 
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_ESTOQUE);
@@ -356,7 +355,7 @@ void cadastrarEstoque(struct Estoque *estoque) {
 }
 
 //// Imprime as opções do menu de insumos.
-void menuOpcoesInsumo(struct Estoque *estoque) {
+void menuOpcoesInsumo(Estoque *estoque) {
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
         printf("%s: %d --> %s \n", CODIGO, estoque->insumos[i].codigo + 1, estoque->insumos[i].nome);
@@ -365,7 +364,7 @@ void menuOpcoesInsumo(struct Estoque *estoque) {
 
 //// Solicita ao usuário do sistema o novo valor em (tipo de medida) para o insumo
 //// a ser atualizado no estoque.
-void atualizarInsumo(struct Estoque *estoque, int idDoInsumo) {
+void atualizarInsumo(Estoque *estoque, int idDoInsumo) {
     printf("\n-> %s -> %s -> Atualizar insumo %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_ESTOQUE,
            estoque->insumos[idDoInsumo].nome);
     int quantidadeInformada = -1;
@@ -389,7 +388,7 @@ void atualizarInsumo(struct Estoque *estoque, int idDoInsumo) {
 //// Para cada insumo em estoque, será imprimido a
 //// informação do nome e (tipo de media do insumo)
 //// com o valor atual
-void consultarEstoque(struct Estoque *estoque) {
+void consultarEstoque(Estoque *estoque) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CONSULTAR_ESTOQUE);
 
     menuOpcoesInsumo(estoque);
@@ -406,7 +405,7 @@ void consultarEstoque(struct Estoque *estoque) {
         if (opcaoSelecionada == TOTAL_INSUMOS + 1) {
             imprimirDadosDoEstoque(estoque);
         } else {
-            struct Insumo insumo = estoque->insumos[opcaoSelecionada - 1];
+            Insumo insumo = estoque->insumos[opcaoSelecionada - 1];
             imprimirInsumo(&insumo);
         }
     } else {
@@ -418,23 +417,23 @@ void consultarEstoque(struct Estoque *estoque) {
 }
 
 //// Imprime os dados de todos os insumos cadastrados.
-void imprimirDadosDoEstoque(struct Estoque *estoque) {
+void imprimirDadosDoEstoque(Estoque *estoque) {
     printf("\n");
     int i;
     for (i = 0; i < TOTAL_INSUMOS; ++i) {
-        struct Insumo insumo = estoque->insumos[i];
+        Insumo insumo = estoque->insumos[i];
         imprimirInsumo(&insumo);
     }
 }
 
 //// Imprime os dados do insumo
-void imprimirInsumo(struct Insumo *insumo) {
+void imprimirInsumo(Insumo *insumo) {
     printf("%s --> Quantidade em estoque: %d %s\n", insumo->nome,
            insumo->quantidadeEmEstoque, insumo->tipoMedia);
 }
 
 //// Imprime o submenu MENU_CADASTRAR_VENDA
-void menuCadastrarVendas(struct Estoque *estoque, struct Producao *producao) {
+void menuCadastrarVendas(Estoque *estoque, Producao *producao) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_VENDA);
 
     mostrarMenuProducao(producao, "Atualizar todos");
@@ -451,7 +450,7 @@ void menuCadastrarVendas(struct Estoque *estoque, struct Producao *producao) {
         if (opcaoSelecionada == TOTAL_DIAS_SEMANA + 1) {
             int posicaoDiaDaSemana;
             for (posicaoDiaDaSemana = 0; posicaoDiaDaSemana < TOTAL_DIAS_SEMANA; ++posicaoDiaDaSemana) {
-                struct DiaDaSemana *diaDaSemana = &producao->producaoDiasDaSemana[posicaoDiaDaSemana];
+                DiaDaSemana *diaDaSemana = &producao->producaoDiasDaSemana[posicaoDiaDaSemana];
                 cadastrarVendas(estoque, diaDaSemana);
             }
         } else {
@@ -464,7 +463,7 @@ void menuCadastrarVendas(struct Estoque *estoque, struct Producao *producao) {
 }
 
 /// Opção para o cadastro de vendas ou de uma venda.
-void cadastrarVendas(struct Estoque *estoque, struct DiaDaSemana *diaDaSemana) {
+void cadastrarVendas(Estoque *estoque, DiaDaSemana *diaDaSemana) {
     printf("\n-> %s -> %s -> de %s\n\n", MENU_PRINCIPAL, MENU_CADASTRAR_VENDA, diaDaSemana->nome);
     int quantiaInformada = -1;
 
@@ -483,7 +482,7 @@ void cadastrarVendas(struct Estoque *estoque, struct DiaDaSemana *diaDaSemana) {
 }
 
 /// Ação para cunsultar vendas ou venda.
-void menuConsultarVendas(struct Producao *producao) {
+void menuConsultarVendas(Producao *producao) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_CONSULTAR_PRODUCAO);
     mostrarMenuProducao(producao, "Consultar todos os dias");
     int opcaoSelecionada;
@@ -495,12 +494,12 @@ void menuConsultarVendas(struct Producao *producao) {
 
     if (opcaoSelecionada >= 0 && opcaoSelecionada <= TOTAL_DIAS_SEMANA + 1) {
         if (opcaoSelecionada != TOTAL_DIAS_SEMANA + 1) {
-            struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[opcaoSelecionada - 1];
+            DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[opcaoSelecionada - 1];
             consultarVendaDoDia(diaDaSemana);
         } else {
             int i;
             for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-                struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
+                DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
                 consultarVendaDoDia(diaDaSemana);
             }
             voltarAoMenuAnterior();
@@ -512,7 +511,7 @@ void menuConsultarVendas(struct Producao *producao) {
 }
 
 ///// Imprime o dados da produção do dia
-void consultarVendaDoDia(struct DiaDaSemana diaDaSemana) {
+void consultarVendaDoDia(DiaDaSemana diaDaSemana) {
     printf("\n\n");
     printf("Dia ----------------------> %s\n", diaDaSemana.nome);
     printf("Marmitas produzidas ------> %d\n", diaDaSemana.totalMarmitasProduizadas);
@@ -523,10 +522,10 @@ void consultarVendaDoDia(struct DiaDaSemana diaDaSemana) {
 }
 
 ///// Imprime o menu da opções para produção.
-void mostrarMenuProducao(struct Producao *producao, char *opcaoFinal) {
+void mostrarMenuProducao(Producao *producao, char *opcaoFinal) {
     int i;
     for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-        struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
+        DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
         printf("%s: %d --> Dia: %s\n", CODIGO, diaDaSemana.id + 1, diaDaSemana.nome);
     }
     printf("%s: %d --> %s\n", CODIGO, TOTAL_DIAS_SEMANA + 1, opcaoFinal);
@@ -551,7 +550,7 @@ void imprimirOpcaoDoMenu(int codigo, char *nome) {
 }
 
 ///// Imprime o relatório da semana
-void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque) {
+void imprimirRelatorio(Producao *producao, Estoque *estoque) {
     printf("\n-> %s -> %s\n\n", MENU_PRINCIPAL, MENU_RELATORIO);
 
     int totalMarmitasProduzidas = 0;
@@ -559,16 +558,16 @@ void imprimirRelatorio(struct Producao *producao, struct Estoque *estoque) {
     double totalValorVendas = 0;
     double totalValorPrejuizo = 0;
 
-    struct DiaDaSemana diaMenorVenda = producao->producaoDiasDaSemana[0];
-    struct DiaDaSemana diaMenorProducao = producao->producaoDiasDaSemana[0];
-    struct DiaDaSemana diaMaiorProducao = producao->producaoDiasDaSemana[0];
-    struct DiaDaSemana diaMaiorVenda = producao->producaoDiasDaSemana[0];
+    DiaDaSemana diaMenorVenda = producao->producaoDiasDaSemana[0];
+    DiaDaSemana diaMenorProducao = producao->producaoDiasDaSemana[0];
+    DiaDaSemana diaMaiorProducao = producao->producaoDiasDaSemana[0];
+    DiaDaSemana diaMaiorVenda = producao->producaoDiasDaSemana[0];
 
     int i;
 
     ///// Alaliza os dados dos dias de produção
     for (i = 0; i < TOTAL_DIAS_SEMANA; ++i) {
-        struct DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
+        DiaDaSemana diaDaSemana = producao->producaoDiasDaSemana[i];
 
         totalMarmitasProduzidas += diaDaSemana.totalMarmitasProduizadas + diaDaSemana.totalMarmitasVendidas;
         totalMarmitasVendidas += diaDaSemana.totalMarmitasVendidas;
